@@ -1,0 +1,106 @@
+body
+{
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    min-height: 100vh;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1.5em;
+    box-sizing: border-box;
+}
+.customization
+{
+    gap:1em;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 3fr;
+}
+.cp-title
+{
+    display: inline-flex;
+    align-items: end;
+}
+.customization textarea
+{
+    resize: none;
+}
+.file-upload
+{
+    margin-top: 1em;
+    margin-bottom: 1em;
+    display: flex;
+}
+.fu
+{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+}
+.fu label, .fu input
+{
+    cursor: pointer;
+}
+.diff-button
+{
+    margin-bottom: 1em;
+    width: 100%;
+}
+.diff-button button
+{
+    font-size: 1.2em;
+    width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+.comparison-result
+{
+    flex: 1;
+    display: flex;
+    overflow-y: hidden;
+    align-items: stretch;
+    max-height: 60vh;
+    gap: 1rem;
+    font-family: monospace;
+}
+.comparison-result .cr
+{
+    padding: 0.5em;
+    box-sizing: border-box;
+    border-radius: 0.2em;
+    border: 1px solid black;
+    width: 100%;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+.tag-comparison-result
+{
+    display: flex;
+}
+.tcr
+{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.comparison-result span.added
+{
+    background-color: rgb(94, 190, 94);
+}
+.comparison-result span.removed
+{
+    background-color: rgb(236, 138, 138);
+}
+.cr span
+{
+    white-space: pre-line;
+}
+.cr span span
+{
+    margin-right: 0.3em;
+}

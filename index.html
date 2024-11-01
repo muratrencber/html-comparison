@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>HTML Comparer</title>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+    </head>
+    <body>
+        <div class="customization">
+                <div class="cp-title">Tags to compare, write as "css selector => [attribute1,attribute2]"</div>
+                <div class="cp-title">Tags to Remove, put ! before selector to remove it before tags to compare extraction, add => [attribute] to only remove attribute</div>
+                <textarea id="tags-to-compare">script => [src]
+link[rel="stylesheet"] => [href]
+link[rel="alternate"] => [href, hreflang]
+title => [innerText]
+meta[name="description"] => [content]
+link[rel="canonical"] => [href]
+meta[property="og:locale"] => [content]
+meta[property="og:title"] => [content]
+meta[property="og:description"] => [content]
+meta[property="og:url"] => [content]
+html => [lang]</textarea>
+                <textarea id="tags-to-remove">!script[type="application/ld+json"]
+!noscript
+!section => [id]
+!a => [rel]
+head
+script
+footer
+header</textarea>
+        </div>
+        <div class="file-upload">
+            <div class="fu input">
+                <label for="file1">Choose the first HTML</label>
+                <input type="file" id="file1" class="inputfile" />
+            </div>
+            <div class="fu input">
+                <label for="file2">Choose the second HTML</label>
+                <input type="file" id="file2" class="inputfile" />
+            </div>
+        </div>
+        <div class="diff-button">
+            <button id="btn-compare">Compare!</button>
+        </div>
+        <div class="comparison-result">
+            <div class="cr diff">
+                <span id="file1-diff">
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    ===<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    ===<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    ===<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                    A<br>
+                </span>
+            </div>
+            <div class="cr diff">
+                <span id="file2-diff">
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    ===
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    ===
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    ===
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                    A
+                </span>
+            </div>
+        </div>
+        <div class="tag-comparison-result">
+            <div class="tcr">
+                <div class="tcr-title">Tag comparison result</div>
+                <div class="tcr-result">
+                    <span id="tag-comparison-result-1">
+                    </span>
+                </div>
+            </div>
+            <div class="tcr">
+                <div class="tcr-title">Tag comparison result</div>
+                <div class="tcr-result">
+                    <span id="tag-comparison-result-2">
+                    </span>
+                </div>
+            </div>
+        </div>
+        <script type="module" src="bundle.js"></script>
+        <script>
+            const file1prev = document.getElementById('file1-diff').parentElement;
+            const file2prev = document.getElementById('file2-diff').parentElement;
+
+            const syncScrolls = (fromF1) => {
+                const value = fromF1 ? file1prev.scrollTop : file2prev.scrollTop;
+                if(!fromF1)
+                    file1prev.scrollTop = value;
+                else
+                    file2prev.scrollTop = value;
+            }
+            //sync their scrolls
+            file1prev.onscroll = function() {
+                syncScrolls(true);
+            }
+            file2prev.onscroll = function() {
+                syncScrolls(false);
+            }
+            syncScrolls(true);
+        </script>
+    </body>
+</html>
