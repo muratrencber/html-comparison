@@ -7,6 +7,7 @@ module.exports = {
         path: path.resolve(__dirname, "."),
         filename: 'bundle.js'
     },
+    mode: 'development',
     resolve: {
         alias: {
           'node_modules': path.join(__dirname, 'node_modules'),

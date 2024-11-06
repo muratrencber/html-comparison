@@ -12,8 +12,7 @@
  */
 
 /**
- * @typedef {Object} TagComparisonData
- * @property {Object<string, string>} attributeMap
+ * @typedef {Object<string, string>} TagComparisonData
  */
 
 /**
@@ -76,6 +75,68 @@ export const parseRemovals = (removalsStr) => {
 }
 
 /**
+ * @typedef {Object} RemovalFlags
+ * @property {boolean} fromClassList
+ * @property {boolean} hasRegex
+ * @property {string?} comparisonValue
+ */
+
+/**
+ * 
+ * @param {string} removalStr 
+ * @returns {string?}
+ */
+const getRemovalComparisonValue = (removalStr) => {
+    const eqSplitted = removalStr.split("=");
+    if(eqSplitted.length !== 2) return null;
+    return eqSplitted[1];
+}
+
+/**
+ * 
+ * @param {string} removalStr
+ * @returns {RemovalFlags}
+ */
+const getRemovalFlags = (removalStr) => {
+    const dcSplitted = removalStr.split(":");
+    /** @type {RemovalFlags} */
+    let currentFlags = {
+        fromClassList: false,
+        hasRegex: false,
+        comparisonValue: getRemovalComparisonValue(removalStr)
+    }
+    if(dcSplitted.length !== 2) return currentFlags;
+    const flags = dcSplitted[0];
+    currentFlags.fromClassList = flags.includes("c");
+    currentFlags.hasRegex = flags.includes("r");
+    return currentFlags;
+}
+
+const stripRemovalFlagsAndComparison = (removalStr) => {
+    if(removalStr.includes(":"))
+        removalStr = removalStr.split(":")[1];
+    if(removalStr.includes("="))
+        removalStr = removalStr.split("=")[0];
+    return removalStr;
+}
+
+/**
+ * 
+ * @param {string} removalStr 
+ * @param {RemovalFlags} flags
+ * @returns {(str: string) => boolean} 
+ */
+const getMatcher = (removalStr, flags) => {
+    const stripped = stripRemovalFlagsAndComparison(removalStr);
+    if(flags.hasRegex)
+    {
+        const regex = new RegExp(stripped, "i");
+        return str => regex.test(str);
+    }
+    return str => str === stripped;
+}
+
+/**
  * 
  * @param {Document} document 
  * @param {ElementRemoval} removal 
@@ -88,7 +149,30 @@ export const applyRemoval = (document, removal) => {
         {
             for(const attribute of removal.attributes)
             {
-                element.removeAttribute(attribute);
+                const flags = getRemovalFlags(attribute);
+                const matcher = getMatcher(attribute, flags);
+                if(flags.fromClassList)
+                {
+                    const classElements = element.classList;
+                    const allElems = [];
+                    const elementsToRemove = [];
+                    classElements.forEach(className => {
+                        allElems.push(className);
+                        if(matcher(className)) elementsToRemove.push(className);
+                    });
+                    elementsToRemove.forEach(className => element.classList.remove(className));
+                    continue;
+                }
+                const allAttributes = element.attributes;
+                const attributesToRemove = [];
+                for(const attr of allAttributes)
+                {
+                    if(matcher(attr.name) && (!flags.comparisonValue || flags.comparisonValue === attr.value))
+                    {
+                        attributesToRemove.push(attr.name);
+                    }
+                }
+                attributesToRemove.forEach(attrName => element.removeAttribute(attrName));
             }
         }
         else

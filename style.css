@@ -10,6 +10,7 @@ body
     align-items: stretch;
     padding: 1.5em;
     box-sizing: border-box;
+    font-family: sans-serif;
 }
 .customization
 {
@@ -103,4 +104,53 @@ body
 .cr span span
 {
     margin-right: 0.3em;
+}
+.tcr-result
+{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+span.spacing
+{
+    display: inline-block;
+    width: 1em;
+}
+.tag-comparison-result-entry
+{
+    .entry-header
+    {
+        font-family: monospace;
+        font-weight: bold;
+        font-size: 1.3em;
+    }
+
+    .entries
+    {
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        padding-left: 1.5em;
+        gap: 0.5em;
+
+        .tag-comparison-entry
+        {
+            padding: 0.5em;
+            box-sizing: border-box;
+            border-radius: 0.5em;
+            background-color: lightblue;
+        }
+
+        .tag-comparison-entry.added
+        {
+            color:rgb(0, 66, 0);
+            background-color: rgb(94, 190, 94);
+        }
+
+        .tag-comparison-entry.removed
+        {
+            color:rgb(134, 9, 9);
+            background-color: rgb(236, 138, 138);
+        }
+    }
 }

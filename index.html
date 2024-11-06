@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8">
         <title>HTML Comparer</title>
         <link rel="stylesheet" type="text/css" href="style.css" />
     </head>
@@ -22,11 +23,14 @@ html => [lang]</textarea>
                 <textarea id="tags-to-remove">!script[type="application/ld+json"]
 !noscript
 !section => [id]
-!a => [rel]
+!body => [c:page-parent,c:page-child,cr:page-id-\d*,cr:parent-pageid-\d*]
+!.c-virtual_list__item => [id]
 head
 script
 footer
-header</textarea>
+header
+!img => [data-dark-src,data-light-src]
+</textarea>
         </div>
         <div class="file-upload">
             <div class="fu input">
@@ -39,6 +43,23 @@ header</textarea>
             </div>
         </div>
         <div class="diff-button">
+            <label for="remove-empty-paragraphs">Remove Empty Paragraphs</label>
+            <input type="checkbox" id="remove-empty-paragraphs" checked />
+            <span class="spacing"></span>
+            <label for="replace-special">Replace special characters “,”,’</label>
+            <input type="checkbox" id="replace-special" checked/>
+            <span class="spacing"></span>
+            <label for="ignore-image-sources">Ignore Image Sources</label>
+            <input type="checkbox" id="ignore-image-sources" checked/>
+            <span class="spacing"></span>
+            <label for="ignore-image-alts">Ignore Image Alts</label>
+            <input type="checkbox" id="ignore-image-alts" checked/>
+            <span class="spacing"></span>
+            <label for="ignore-a-blank">Ignore Blank Anchor Targets</label>
+            <input type="checkbox" id="ignore-a-blank" checked/>
+            <span class="spacing"></span>
+            <label for="ignore-a-rels">Ignore Anchor Rels</label>
+            <input type="checkbox" id="ignore-a-rels" checked/>
             <button id="btn-compare">Compare!</button>
         </div>
         <div class="comparison-result">
@@ -180,16 +201,12 @@ header</textarea>
         <div class="tag-comparison-result">
             <div class="tcr">
                 <div class="tcr-title">Tag comparison result</div>
-                <div class="tcr-result">
-                    <span id="tag-comparison-result-1">
-                    </span>
+                <div class="tcr-result" id="tag-comparison-result-1">
                 </div>
             </div>
             <div class="tcr">
                 <div class="tcr-title">Tag comparison result</div>
-                <div class="tcr-result">
-                    <span id="tag-comparison-result-2">
-                    </span>
+                <div class="tcr-result" id="tag-comparison-result-2">
                 </div>
             </div>
         </div>

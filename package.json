@@ -9,6 +9,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "he": "^1.2.0",
     "html-differ": "^1.4.0"
   },
   "devDependencies": {
