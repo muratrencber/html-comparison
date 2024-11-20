@@ -195,12 +195,19 @@ export const getTagComparisonData = (document, comparison) => {
     for(const element of elements)
     {
         const result = {};
+        let hasMissingAttribute = false;
         for(const attribute of comparison.attributes)
         {
             const value = element.getAttribute(attribute);
+            if(value === null)
+            {
+                hasMissingAttribute = true;
+                break;
+            }
             const trimmedValue = !!value ? value.trim() : null;
             result[attribute] = trimmedValue;
         }
+        if(hasMissingAttribute) continue;
         data.push(result);
     }
     return data;

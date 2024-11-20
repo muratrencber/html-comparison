@@ -103,6 +103,7 @@ const createComparisonEntry = (comparisonData) => {
  * }} result 
  */
 const applyTagResult = (result) => {
+    console.log(result);
     const elems1 = addComparisonResult(tagComparisonResult1);
     const elems2 = addComparisonResult(tagComparisonResult2);
     elems1.header.innerText = tagExpressionToString(result.expression);
@@ -118,7 +119,7 @@ const applyTagResult = (result) => {
         return [td, is1];
     }
     /**
-     * 
+     * @param {import("./tag-comparison").TagComparisonData} td
      * @param {import("./tag-comparison").TagComparisonData[]} tds 
      * @param {boolean} is1 
      * @returns {[import("./tag-comparison").TagComparisonData, boolean][]}
@@ -128,12 +129,64 @@ const applyTagResult = (result) => {
         ...mapTCompArray(result.comparisonResult.onlyOn1, true),
         ...mapTCompArray(result.comparisonResult.onlyOn2, false)
     ]
+    let index = 0;
     for(const [td, is1] of allElems)
     {
         const t1Entry = createComparisonEntry(td);
         t1Entry.classList.add(is1 ? "added" : "removed");
-        const t2Entry = createComparisonEntry(td);
-        t2Entry.classList.add(is1 ? "removed" : "added");
+        const has2Keys = Object.keys(td).length === 2;
+        let t2Entry = null;
+        if(has2Keys)
+        {
+            if(is1)
+            {
+                const firstKey = Object.keys(td)[0];
+                const firstData = td[firstKey];
+                const at2 = allElems.find(([td2, is1]) => {
+                    if(is1) return false;
+                    const t2Data = td2[firstKey];
+                    if(t2Data === firstData)
+                    {
+                        return true;
+                    }
+                    return false;
+                });
+                
+                if(at2)
+                {
+                    t2Entry = createComparisonEntry(at2[0]);
+                    t2Entry.classList.add("changed");
+                }
+                else
+                {
+                    t2Entry = createComparisonEntry(td);
+                    t2Entry.classList.add("removed");
+                }
+            }
+            else
+            {
+                
+                const firstKey = Object.keys(td)[0];
+                const firstData = td[firstKey];
+                const at1 = allElems.find(([td1, is1]) => {
+                    if(!is1) return false;
+                    const t1Data = td1[firstKey];
+                    if(t1Data === firstData)
+                    {
+                        return true;
+                    }
+                    return false;
+                });
+                if(at1) continue;
+                t2Entry = createComparisonEntry(td);
+                t2Entry.classList.add("added");
+            }
+        }
+        else
+        {
+            t2Entry = createComparisonEntry(td);
+            t2Entry.classList.add(is1 ? "removed" : "added");
+        }
         elems1.childContainer.appendChild(t1Entry);
         elems2.childContainer.appendChild(t2Entry);
     }

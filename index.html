@@ -11,18 +11,17 @@
                 <div class="cp-title">Tags to Remove, put ! before selector to remove it before tags to compare extraction, add => [attribute] to only remove attribute</div>
                 <textarea id="tags-to-compare">script => [src]
 link[rel="stylesheet"] => [href]
-link[rel="alternate"] => [href, hreflang]
+link[rel="alternate"] => [hreflang, href]
 title => [innerText]
-meta[name="description"] => [content]
+meta => [name, content]
 link[rel="canonical"] => [href]
-meta[property="og:locale"] => [content]
-meta[property="og:title"] => [content]
-meta[property="og:description"] => [content]
-meta[property="og:url"] => [content]
+meta => [property, content]
 html => [lang]</textarea>
                 <textarea id="tags-to-remove">!script[type="application/ld+json"]
 !noscript
 !section => [id]
+!section.blog-posts.maestra-related
+!.landing-video-controller
 !body => [c:page-parent,c:page-child,cr:page-id-\d*,cr:parent-pageid-\d*]
 !.c-virtual_list__item => [id]
 head

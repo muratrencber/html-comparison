@@ -17,7 +17,7 @@ body
     gap:1em;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 3fr;
+    grid-template-rows: 1fr 7fr;
 }
 .cp-title
 {
@@ -27,6 +27,7 @@ body
 .customization textarea
 {
     resize: none;
+    min-height: 256px;
 }
 .file-upload
 {
@@ -93,6 +94,10 @@ body
 {
     background-color: rgb(94, 190, 94);
 }
+.comparison-result span.changed
+{
+    background-color: rgb(180, 190, 94);
+}
 .comparison-result span.removed
 {
     background-color: rgb(236, 138, 138);
@@ -139,6 +144,12 @@ span.spacing
             box-sizing: border-box;
             border-radius: 0.5em;
             background-color: lightblue;
+
+            &.changed
+            {
+                background-color: rgb(180, 190, 94);
+                color:rgb(62, 65, 39);
+            }
         }
 
         .tag-comparison-entry.added
@@ -152,5 +163,7 @@ span.spacing
             color:rgb(134, 9, 9);
             background-color: rgb(236, 138, 138);
         }
+
+
     }
 }
